@@ -3,7 +3,7 @@
 <title> ::= <string>
 <singer_name> ::= <string>
 <genre> ::= <string>
-<length> ::= <two_digit_integer> ":" <two_digit_integer> // the second two_digit_integer can only go up to 59
+<length> ::= <two_digit_integer> ":" <two_digit_integer> // two_digit_integer can only go up to 59
 
 <string> ::= <letter> <string> | <letter>
 <two_digit_integer> ::= <digit> <digit>
