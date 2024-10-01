@@ -1,0 +1,15 @@
+<song_list> ::= <song> <song_list> | <song>
+<song> ::= <title> <singer_name> <genre> <length>
+<title> ::= <string>
+<singer_name> ::= <string>
+<genre> ::= <string>
+<length> ::= <two_digit_integer> ":" <two_digit_integer> // the second two_digit_integer can only go up to 59
+
+<string> ::= <letter> <string> | <letter>
+<two_digit_integer> ::= <digit> <digit>
+
+<digit> ::= "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" 
+
+
+<like_song> ::= 'LIKE' <song>
+<download_song> ::= 'DOWNLOAD' <song>
