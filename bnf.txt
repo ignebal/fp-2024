@@ -1,8 +1,9 @@
 <song_list> ::= <song> <song_list> | <song>
 <song> ::= <title> <singer_name> <genre> <length>
-<title> ::= <string>
-<singer_name> ::= <string>
-<genre> ::= <string>
+<title> ::= <quoted_string>
+<singer_name> ::= <quoted_string>
+<genre> ::= <quoted_string>
+<quoted_string> ::= "\"" <string> "\""
 <length> ::= <two_digit_integer> ":" <two_digit_integer> // two_digit_integer can only go up to 59
 
 <string> ::= <letter> <string> | <letter>

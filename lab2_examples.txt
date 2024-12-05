@@ -1,0 +1,61 @@
+>>> LIKE "Bohemian Rhapsody" "Queen" "Rock" 05:55
+Song liked!
+>>> LIKE "Stairway to Heaven" "Led Zeppelin" "Rock" 08:02
+Song liked!
+>>> LIKE "Hotel California" "Eagles" "Rock" 06:30
+Song liked!
+>>> LIKE "Smells Like Teen Spirit" "Nirvana" "Grunge" 05:01
+Song liked!
+>>> LIKE "Hey Jude" "The Beatles" "Rock" 07:11
+Song liked!
+>>> OPEN
+[Song {songTitle = "Hey Jude", songSinger = "The Beatles", songGenre = "Rock", songLength = (7,11)},
+Song {songTitle = "Smells Like Teen Spirit", songSinger = "Nirvana", songGenre = "Grunge", songLength = (5,1)},
+Song {songTitle = "Hotel California", songSinger = "Eagles", songGenre = "Rock", songLength = (6,30)},
+Song {songTitle = "Stairway to Heaven", songSinger = "Led Zeppelin", songGenre = "Rock", songLength = (8,2)},
+Song {songTitle = "Bohemian Rhapsody", songSinger = "Queen", songGenre = "Rock", songLength = (5,55)}]
+
+>>> UNLIKE "Smells Like Teen Spirit" "Nirvana" "Grunge" 05:01
+Song unliked!
+>>> UNLIKE "Stairway to Heaven" "Led Zeppelin" "Rock" 08:02
+Song unliked!
+>>> OPEN
+[Song {songTitle = "Hey Jude", songSinger = "The Beatles", songGenre = "Rock", songLength = (7,11)},
+Song {songTitle = "Hotel California", songSinger = "Eagles", songGenre = "Rock", songLength = (6,30)},
+Song {songTitle = "Bohemian Rhapsody", songSinger = "Queen", songGenre = "Rock", songLength = (5,55)}]
+
+ghci> parseLength "5:55"
+Left "Expected two digits"
+ghci> parseLength "05:55"
+Right (5,55)
+ghci> parseLength "55"
+Right (0,55)
+ghci> parseLength "60"
+Left "Seconds must be between 0 and 59"
+ghci> parseLength "05:555"
+Left "Expected two digits"
+ghci> parseQuotedString "\"Hello\""
+Right "Hello"
+ghci> parseQuotedString "\"Hello World\""
+Right "Hello World"
+ghci> parseQuotedString "\"\""
+Right ""
+ghci> parseQuotedString "\"Hello"
+Left "Unterminated quoted string"
+ghci> parseQuotedString "Hello\""
+Left "Expected \"\"\""
+ghci> parseQuotedString " \"Hello\""
+Left "Expected \"\"\""
+ghci> parseSong "\"Bohemian Rhapsody\" \"Queen\" \"Rock\" 05:55"
+Right (Song {songTitle = "Bohemian Rhapsody", songSinger = "Queen", songGenre = "Rock", songLength = (5,55)})
+ghci> parseSong "\"Invalid Length\" \"Band\" \"Genre\" 60"Left "Seconds must be between 0 and 59"
+ghci> parseSongList ""
+Right []
+ghci> parseQuery "OPEN \"song1\" \"band1\" \"genre1\" 01:00\n\"song2\" \"band2\" \"genre2\" 02:00"
+Right (OpenSongList [Song {songTitle = "song2", songSinger = "band2", songGenre = "genre2", songLength = (2,0)}])
+ghci> parseQuery "OPEN"
+Right (OpenSongList [])
+ghci> parseQuery "LIKE \"Bohemian Rhapsody\" \"Queen\" \"Rock\" 05:55"
+Right (LikeSong (Song {songTitle = "Bohemian Rhapsody", songSinger = "Queen", songGenre = "Rock", songLength = (5,55)}))
+ghci> parseQuery "UNLIKE \"Stairway to Heaven\" \"Led Zeppelin\" \"Rock\" 08:02"
+Right (UnlikeSong (Song {songTitle = "Stairway to Heaven", songSinger = "Led Zeppelin", songGenre = "Rock", songLength = (8,2)}))
